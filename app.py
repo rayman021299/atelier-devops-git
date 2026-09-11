@@ -19,6 +19,11 @@ def get_status() -> dict:
     }
 
 
+def health_check() -> dict:
+    """Vérification rapide de l'API."""
+    return {"status": "ok", "service": "api"}
+
+
 if __name__ == "__main__":
     print("Application démarrée. Seuil configuré :", seuil)
     print("Statut :", get_status())
