@@ -1,4 +1,4 @@
-﻿"""
+"""
 Application simple de démonstration pour l'atelier DevOps Git
 """
 
@@ -33,3 +33,6 @@ def multiplier(a, b):
 
 def saluer(nom):
     return f"Bonjour {nom}"
+
+def soustraire(a, b):
+    return a - b
