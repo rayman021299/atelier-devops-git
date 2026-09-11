@@ -24,6 +24,11 @@ def health_check() -> dict:
     return {"status": "ok", "service": "api"}
 
 
+# fonction en cours de dev
+def calcul_moyenne(liste):
+    return sum(liste)
+
+
 if __name__ == "__main__":
     print("Application démarrée. Seuil configuré :", seuil)
     print("Statut :", get_status())
