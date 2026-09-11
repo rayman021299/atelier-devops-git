@@ -27,3 +27,6 @@ Conflit sur la variable seuil entre eat/seuil-15 (seuil = 15) et eat/seuil-25 
 Mise en place de .github/CODEOWNERS avec assignation des zones (*.py, README.md). Ouverture de la PR #1 sur feat/division avec description, verification du code et merge sur main.
 ### Protection de branche (Etape 6)
 Configuration d'une regle de protection sur main (PR obligatoire, historique lineaire, pas de bypass admin). Test effectue en local : push direct refuse par GitHub (erreur GH006).
+### Securite du depot (Etape 7)
+- Hook local pre-commit configure : verifie les diffs et refuse la creation du commit si un motif sensible est detecte (teste avec succes).
+- Signature des commits activee avec cle SSH signante et badge Verified visible sur GitHub.
