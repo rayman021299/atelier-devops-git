@@ -1,0 +1,21 @@
+﻿# Environnements virtuels et dépendances
+.venv/
+env/
+__pycache__/
+*.pyc
+
+# Fichiers de configuration et secrets (Sécurité DevSecOps)
+.env
+*.key
+*.pem
+secrets.env
+
+# Fichiers systèmes et éditeurs
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs et temporaires
+*.log
+*.tmp
