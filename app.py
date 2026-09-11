@@ -24,6 +24,10 @@ def health_check() -> dict:
     return {"status": "ok", "service": "api"}
 
 
+def multiplier(a, b):
+    return a * b
+
+
 if __name__ == "__main__":
     print("Application démarrée. Seuil configuré :", seuil)
     print("Statut :", get_status())
