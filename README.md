@@ -31,3 +31,7 @@ Mise en place de .github/CODEOWNERS avec assignation des zones (*.py, README.md)
 
 ### Protection de branche (Etape 6)
 Configuration d'une regle de protection sur main (PR obligatoire, historique lineaire, pas de bypass admin). Test effectue en local : push direct refuse par GitHub (erreur GH006).
+
+### Securite du depot (Etape 7)
+- Hook local pre-commit configure : verifie les diffs et refuse la creation du commit si un motif sensible est detecte (teste avec succes).
+- Signature des commits activee avec cle SSH signante et badge Verified visible sur GitHub.
