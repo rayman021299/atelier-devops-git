@@ -31,6 +31,10 @@ def calcul_moyenne(liste):
     return sum(liste) / len(liste)
 
 
+def calcul_pourcentage(val, total):
+    return (val / total) * 100
+
+
 if __name__ == "__main__":
     print("Application démarrée. Seuil configuré :", seuil)
     print("Statut :", get_status())
