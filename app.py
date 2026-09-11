@@ -1,8 +1,8 @@
-﻿"""
+"""
 Application simple de démonstration pour l'atelier DevOps Git
 """
 
-seuil = 10
+seuil = 15
 
 
 def check_threshold(valeur: int) -> bool:
