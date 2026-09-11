@@ -39,6 +39,12 @@ def soustraire(a, b):
 # TODO: gerer les logs
 
 
+def diviser(a, b):
+    if b == 0:
+        return None
+    return a / b
+
+
 if __name__ == "__main__":
     print("Application démarrée. Seuil configuré :", seuil)
     print("Statut :", get_status())
