@@ -30,3 +30,6 @@ if __name__ == "__main__":
     print("Health check :", health_check())
 def multiplier(a, b):
     return a * b
+
+def saluer(nom):
+    return f"Bonjour {nom}"
