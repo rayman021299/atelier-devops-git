@@ -28,3 +28,6 @@ Conflit sur la variable seuil entre feat/seuil-15 (seuil = 15) et feat/seuil-25 
 
 ### CODEOWNERS et revue de PR (Etape 5)
 Mise en place de .github/CODEOWNERS avec assignation des zones (*.py, README.md). Ouverture de la PR #1 sur feat/division avec description, verification du code et merge sur main.
+
+### Protection de branche (Etape 6)
+Configuration d'une regle de protection sur main (PR obligatoire, historique lineaire, pas de bypass admin). Test effectue en local : push direct refuse par GitHub (erreur GH006).
