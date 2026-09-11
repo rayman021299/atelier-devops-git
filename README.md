@@ -25,3 +25,5 @@ Conflit sur la variable seuil entre eat/seuil-15 (seuil = 15) et eat/seuil-25 
 - Git Bisect : recherche par dichotomie avec git bisect run qui a permis d'isoler le commit fautif 407c567 (seuil passe en str au lieu de int). Corrige sur main.
 ### CODEOWNERS et revue de PR (Etape 5)
 Mise en place de .github/CODEOWNERS avec assignation des zones (*.py, README.md). Ouverture de la PR #1 sur feat/division avec description, verification du code et merge sur main.
+### Protection de branche (Etape 6)
+Configuration d'une regle de protection sur main (PR obligatoire, historique lineaire, pas de bypass admin). Test effectue en local : push direct refuse par GitHub (erreur GH006).
