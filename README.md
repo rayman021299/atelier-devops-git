@@ -16,3 +16,7 @@ Trunk-based development : on travaille avec des branches courtes qui partent de 
 - Commits conventionnels (feat:, fix:, chore:, docs:)
 - Rebase interactif pour nettoyer les commits avant la PR
 - Commits signes
+## Notes d'atelier
+
+### Conflit de merge (Etape 3)
+Conflit sur la variable seuil entre eat/seuil-15 (seuil = 15) et eat/seuil-25 (seuil = 25) qui ont modifie la meme ligne : resolu manuellement en retenant un arbitrage a 20.
