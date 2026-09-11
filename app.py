@@ -27,3 +27,4 @@ def health_check() -> dict:
 if __name__ == "__main__":
     print("Application démarrée. Seuil configuré :", seuil)
     print("Statut :", get_status())
+    print("Health check :", health_check())
