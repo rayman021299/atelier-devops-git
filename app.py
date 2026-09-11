@@ -36,3 +36,5 @@ def saluer(nom):
 
 def soustraire(a, b):
     return a - b
+
+# TODO: gerer les logs
