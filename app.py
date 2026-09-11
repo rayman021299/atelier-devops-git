@@ -26,7 +26,9 @@ def health_check() -> dict:
 
 # fonction en cours de dev
 def calcul_moyenne(liste):
-    return sum(liste)
+    if not liste:
+        return 0
+    return sum(liste) / len(liste)
 
 
 if __name__ == "__main__":
