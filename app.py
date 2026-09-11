@@ -32,6 +32,10 @@ def saluer(nom):
     return f"Bonjour {nom}"
 
 
+def soustraire(a, b):
+    return a - b
+
+
 if __name__ == "__main__":
     print("Application démarrée. Seuil configuré :", seuil)
     print("Statut :", get_status())
