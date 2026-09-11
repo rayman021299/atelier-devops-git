@@ -36,6 +36,9 @@ def soustraire(a, b):
     return a - b
 
 
+# TODO: gerer les logs
+
+
 if __name__ == "__main__":
     print("Application démarrée. Seuil configuré :", seuil)
     print("Statut :", get_status())
