@@ -2,7 +2,7 @@
 Application simple de démonstration pour l'atelier DevOps Git
 """
 
-seuil = "20"
+seuil = 20
 
 
 def check_threshold(valeur: int) -> bool:
