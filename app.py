@@ -1,4 +1,4 @@
-﻿"""
+"""
 Application simple de démonstration pour l'atelier DevOps Git
 """
 
@@ -38,3 +38,8 @@ def soustraire(a, b):
     return a - b
 
 # TODO: gerer les logs
+
+def diviser(a, b):
+    if b == 0:
+        return None
+    return a / b
