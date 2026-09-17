@@ -1,51 +1,29 @@
-"""
-Application simple de démonstration pour l'atelier DevOps Git
-"""
+from flask import Flask, jsonify
 
-seuil = 20
+app = Flask(__name__)
 
-
-def check_threshold(valeur: int) -> bool:
-    """Vérifie si une valeur dépasse le seuil configuré."""
-    return valeur >= seuil
+ALERT_THRESHOLD = 25
 
 
-def get_status() -> dict:
-    """Retourne l'état de santé du service."""
-    return {
-        "status": "healthy",
-        "threshold": seuil,
-        "version": "0.1.0"
-    }
+def alert_threshold():
+    """Seuil d'alerte au-dessus duquel une notification est declenchee."""
+    return ALERT_THRESHOLD
 
 
-def health_check() -> dict:
-    """Vérification rapide de l'API."""
-    return {"status": "ok", "service": "api"}
+def sanitize_input(value):
+    """Echappe les caracteres dangereux d'une entree utilisateur."""
+    return value.replace("<", "&lt;").replace(">", "&gt;")
 
 
-def multiplier(a, b):
-    return a * b
+@app.route("/health")
+def health():
+    return jsonify(status="ok"), 200
 
 
-def saluer(nom):
-    return f"Bonjour {nom}"
-
-
-def soustraire(a, b):
-    return a - b
-
-
-# TODO: gerer les logs
-
-
-def diviser(a, b):
-    if b == 0:
-        return None
-    return a / b
+@app.route("/status")
+def status():
+    return jsonify(service="projet-devops-groupe-demo", version="1.0"), 200
 
 
 if __name__ == "__main__":
-    print("Application démarrée. Seuil configuré :", seuil)
-    print("Statut :", get_status())
-    print("Health check :", health_check())
+    app.run(debug=True)

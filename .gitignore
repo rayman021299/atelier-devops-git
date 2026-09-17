@@ -3,6 +3,9 @@
 env/
 __pycache__/
 *.pyc
+.coverage
+.pytest_cache/
+htmlcov/
 
 # Fichiers de configuration et secrets
 .env
