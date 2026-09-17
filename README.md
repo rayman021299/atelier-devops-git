@@ -1,5 +1,7 @@
 # TP1 DevOps - Git avance
 
+[![CI](https://github.com/rayman021299/atelier-devops-git/actions/workflows/ci.yml/badge.svg)](https://github.com/rayman021299/atelier-devops-git/actions/workflows/ci.yml)
+
 Sylvain Bourgeois (S09 - CSI)
 Atelier realise seul.
 
