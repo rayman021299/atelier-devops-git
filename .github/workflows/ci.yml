@@ -39,10 +39,23 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Mettre en cache les dépendances pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('requirements.txt') }}
+
       - name: Installer les dépendances
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Lancer les tests Pytest
-        run: pytest -v
+      - name: Lancer les tests avec couverture
+        run: pytest --cov=app --cov-report=html
+
+      - name: Sauvegarder le rapport de couverture
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rapport-couverture-${{ matrix.python-version }}
+          path: htmlcov/
