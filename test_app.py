@@ -23,3 +23,15 @@ def test_status_endpoint():
     data = response.get_json()
     assert data["service"] == "projet-devops-groupe-demo"
     assert data["version"] == "1.0"
+
+
+def test_visits_endpoint(monkeypatch):
+    from unittest.mock import MagicMock
+    mock_client = MagicMock()
+    mock_client.incr.return_value = 42
+    monkeypatch.setattr("app.get_redis_client", lambda: mock_client)
+
+    client = app.test_client()
+    response = client.get("/visits")
+    assert response.status_code == 200
+    assert response.get_json()["visits"] == 42
