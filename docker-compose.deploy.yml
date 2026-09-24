@@ -1,0 +1,58 @@
+services:
+  redis:
+    image: redis:7-alpine
+    networks:
+      - app-net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 2s
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./deploy:/etc/nginx/conf.d
+    networks:
+      - app-net
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  app-blue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    profiles: ["blue"]
+    ports:
+      - "5001:5000"
+    environment:
+      REDIS_HOST: redis
+      DEPLOY_COLOR: blue
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - app-net
+
+  app-green:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    profiles: ["green"]
+    ports:
+      - "5002:5000"
+    environment:
+      REDIS_HOST: redis
+      DEPLOY_COLOR: green
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - app-net
+
+networks:
+  app-net:
