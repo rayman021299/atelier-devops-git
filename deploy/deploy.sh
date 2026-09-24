@@ -8,7 +8,9 @@ NGINX_CONF="deploy/active.conf"
 PYTHON_BIN="python3"
 command -v python3 >/dev/null 2>&1 || PYTHON_BIN="python"
 
-# Determiner la couleur active et la cible
+export COMMIT_SHA="${COMMIT_SHA:-dev}"
+EXPECTED_SHA="${EXPECTED_SHA:-$COMMIT_SHA}"
+
 if [ -f "$STATE_FILE" ]; then
     ACTIVE=$(tr -d '[:space:]' < "$STATE_FILE")
 else
@@ -52,8 +54,8 @@ fi
 
 
 echo "Verification smoke test..."
-if ! curl -sf "http://localhost:${IDLE_PORT}/status" | $PYTHON_BIN -c "import sys, json; d = json.load(sys.stdin); sys.exit(0 if d.get('deploy_color') == '$IDLE' else 1)"; then
-    echo "ECHEC: smoke test invalide pour app-$IDLE"
+if ! curl -sf "http://localhost:${IDLE_PORT}/status" | $PYTHON_BIN -c "import sys, json; d = json.load(sys.stdin); sys.exit(0 if d.get('deploy_color') == '$IDLE' and d.get('commit_sha') == '$EXPECTED_SHA' else 1)"; then
+    echo "ECHEC: smoke test invalide pour app-$IDLE (couleur ou SHA incorrect)"
     echo "ROLLBACK: arret de app-$IDLE, $ACTIVE reste actif"
     docker compose -f "$COMPOSE_FILE" --profile "$IDLE" stop "app-$IDLE"
     exit 1
@@ -74,7 +76,7 @@ server {
 EOF
 
 
-# S'assurer que nginx tourne puis recharger la config
+
 docker compose -f "$COMPOSE_FILE" up -d nginx
 docker compose -f "$COMPOSE_FILE" exec -T nginx nginx -s reload
 echo "$IDLE" > "$STATE_FILE"
