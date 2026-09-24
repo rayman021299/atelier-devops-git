@@ -26,7 +26,7 @@ fi
 echo "Actif: $ACTIVE | Cible: $IDLE (port $IDLE_PORT)"
 
 
-docker compose -f "$COMPOSE_FILE" up -d redis nginx
+docker compose -f "$COMPOSE_FILE" up -d redis
 
 
 echo "Demarrage de app-$IDLE..."
@@ -74,6 +74,8 @@ server {
 EOF
 
 
+# S'assurer que nginx tourne puis recharger la config
+docker compose -f "$COMPOSE_FILE" up -d nginx
 docker compose -f "$COMPOSE_FILE" exec -T nginx nginx -s reload
 echo "$IDLE" > "$STATE_FILE"
 
