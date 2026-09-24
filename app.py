@@ -37,7 +37,13 @@ def health():
 @app.route("/status")
 def status():
     color = os.getenv("DEPLOY_COLOR", "unknown")
-    return jsonify(service="projet-devops-groupe-demo", version="1.0", deploy_color=color), 200
+    sha = os.getenv("COMMIT_SHA", "dev")
+    return jsonify(
+        service="projet-devops-groupe-demo",
+        version="1.0",
+        deploy_color=color,
+        commit_sha=sha,
+    ), 200
 
 
 @app.route("/visits")

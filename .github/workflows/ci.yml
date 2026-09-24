@@ -107,6 +107,9 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Déployer (blue/green)
+        env:
+          COMMIT_SHA: ${{ github.sha }}
+          EXPECTED_SHA: ${{ github.sha }}
         run: |
           chmod +x ./deploy/deploy.sh
           ./deploy/deploy.sh
