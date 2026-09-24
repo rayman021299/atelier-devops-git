@@ -50,3 +50,25 @@ Pour cet atelier j'ai choisi le Trunk-based : comme je suis seul c'est le plus s
 - Tester : `curl http://localhost:5000/visits`
 - Arreter : `docker compose down`
 
+---
+
+## TP4 - Deploiement continu (CD)
+
+- **Pipeline complet** : enchainement des 4 jobs `lint` -> `test` -> `build-and-push` -> `deploy` déclenche sur chaque push sur `main`.
+- **Publication** : build et push automatique sur `ghcr.io` avec deux tags : le tag immuable `${{ github.sha }}` et `latest`.
+- **Architecture Blue/Green** : deux services `app-blue` (port 5001) et `app-green` (port 5002) gérés avec des profiles Docker Compose et Nginx sur le port 8080 qui route vers la version active.
+- **Healthcheck reel** : `/health` vérifie la connexion Redis avec `client.ping()` et renvoie 503 si Redis est coupe (test Redis éteint et allumé).
+- **Script deploy.sh et rollback auto** :
+  - Démarre la couleur inactive en arriere-plan.
+  - Boucle d'attente sur `/health`.
+  - Smoke test sur `/status` qui vérifie la couleur et le `commit_sha`.
+  - Si le test echoue : rollback automatique (arret de la nouvelle couleur, l'ancienne continue de tourner sans coupure).
+  - Si le test passe : bascule Nginx a chaud avec `nginx -s reload` et arret de l'ancienne version.
+- **Rollback manuel** : test en situation réelle avec `git revert` (passage a la v2.0 puis retour arriere propre via la CI).
+
+### Commandes TP4 :
+- Lancer la bascule locale : `bash deploy/deploy.sh`
+- Tester un rollback (faux SHA) : `COMMIT_SHA=123 EXPECTED_SHA=faux bash deploy/deploy.sh`
+- Verifier la version active : `curl http://localhost:8080/status`
+
+
