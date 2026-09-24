@@ -9,11 +9,28 @@ def test_sanitize_input_escapes_html():
     assert sanitize_input("<script>") == "&lt;script&gt;"
 
 
-def test_health_endpoint():
+def test_health_endpoint(monkeypatch):
+    from unittest.mock import MagicMock
+    mock_client = MagicMock()
+    mock_client.ping.return_value = True
+    monkeypatch.setattr("app.get_redis_client", lambda: mock_client)
+
     client = app.test_client()
     response = client.get("/health")
     assert response.status_code == 200
     assert response.get_json()["status"] == "ok"
+
+
+def test_health_endpoint_redis_down(monkeypatch):
+    import redis
+    from unittest.mock import MagicMock
+    mock_client = MagicMock()
+    mock_client.ping.side_effect = redis.ConnectionError("Redis down")
+    monkeypatch.setattr("app.get_redis_client", lambda: mock_client)
+
+    client = app.test_client()
+    response = client.get("/health")
+    assert response.status_code == 503
 
 
 def test_status_endpoint():
