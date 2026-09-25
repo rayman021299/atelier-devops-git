@@ -71,4 +71,22 @@ Pour cet atelier j'ai choisi le Trunk-based : comme je suis seul c'est le plus s
 - Tester un rollback (faux SHA) : `COMMIT_SHA=123 EXPECTED_SHA=faux bash deploy/deploy.sh`
 - Verifier la version active : `curl http://localhost:8080/status`
 
+---
 
+## TP5 - Observabilite (Prometheus & Grafana)
+
+- **Métriques applicatives** : ajout de `prometheus_client` dans Flask avec un Counter (`http_requests_total`) pour compter les requetes par route/statut et un Histogram (`http_request_duration_seconds`) avec hooks `before_request`/`after_request` pour mesurer le p95.
+- **Exclusion de /metrics** : route exclue du comptage pour que les scrapes reguliers ne faussent pas les chiffres.
+- **Route de test** : ajout de `/simulate-error` qui renvoie une 500 pour tester l'alerting.
+- **Prometheus** : service ajoute dans Docker Compose sur le port 9090, scrape l'app sur `web:5000` toutes les 5s.
+- **Grafana et provisioning as code** :
+  - Datasource Prometheus via `datasource.yml`.
+  - Dashboard via `dashboards.yml` et `application.json` avec 4 panels : débit de requetes, taux d'erreur 5xx, latence p95 et statut UP/DOWN.
+- **Alerting** : règle `TauxErreurEleve` dans `alert_rules.yml` (seuil > 5% d'erreurs pendant au moins 30s). Testée avec `/simulate-error` avec validation des états `inactive` -> `pending` -> `firing`.
+
+### Commandes TP5 :
+- Lancer la stack : `docker compose up -d`
+- Vérifier l'etat : `docker compose ps`
+- Tester l'alerte (générer des 500) : `1..40 | ForEach-Object { curl.exe -s http://localhost:5000/simulate-error > $null; Start-Sleep -Milliseconds 500 }`
+- Interfaces : Prometheus sur `http://localhost:9090` et Grafana sur `http://localhost:3000` (`admin`/`admin`)
+- Arrêter : `docker compose down`
