@@ -78,6 +78,7 @@ EOF
 
 
 docker compose -f "$COMPOSE_FILE" up -d nginx
+sleep 2
 docker compose -f "$COMPOSE_FILE" exec -T nginx nginx -s reload
 echo "$IDLE" > "$STATE_FILE"
 
