@@ -52,3 +52,17 @@ def test_visits_endpoint(monkeypatch):
     response = client.get("/visits")
     assert response.status_code == 200
     assert response.get_json()["visits"] == 42
+
+
+def test_metrics_endpoint():
+    client = app.test_client()
+    response = client.get("/metrics")
+    assert response.status_code == 200
+    assert b"http_requests_total" in response.data
+
+
+def test_simulate_error_endpoint():
+    client = app.test_client()
+    response = client.get("/simulate-error")
+    assert response.status_code == 500
+    assert response.get_json()["error"] == "Erreur simulee"

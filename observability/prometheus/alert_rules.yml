@@ -1,0 +1,22 @@
+groups:
+  - name: application
+    rules:
+      - alert: TauxErreurEleve
+        expr: >
+          sum(rate(http_requests_total{status=~"5.."}[1m]))
+          / sum(rate(http_requests_total[1m])) > 0.05
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          summary: "Taux d'erreur HTTP superieur a 5%"
+          description: "L'application rencontre un taux d'erreur 5xx anormalement eleve."
+
+      - alert: ApplicationInjoignable
+        expr: up{job="flask-app"} == 0
+        for: 15s
+        labels:
+          severity: critical
+        annotations:
+          summary: "L'application Flask ne repond plus"
+          description: "Prometheus ne parvient plus a scraper l'application depuis 15 secondes."
